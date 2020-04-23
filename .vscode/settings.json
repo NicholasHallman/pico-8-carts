@@ -1,0 +1,16 @@
+{
+    "editor.suggestSelection": "first",
+    "pythonTestExplorer.testFramework": "unittest",
+    "workbench.activityBar.visible": true,
+    "workbench.colorTheme": "Horizon Italic",
+    "editor.fontFamily": "Ligalex Mono",
+    "editor.fontLigatures": true,
+    "terminal.integrated.fontFamily": "Fira Mono for Powerline",
+    "remote.SSH.remotePlatform": {
+        "10.1.0.106": "linux"
+    },
+    "debug.console.fontFamily": "Fira Mono for Powerline",
+    "pico8vscodeeditor.pico8fullpath": "C:\\PICO8\\pico8.exe",
+    "pico8.executablePath": "C:\\Program Files (x86)\\PICO-8\\pico8.exe",
+    "pico8vscodeeditor.pico8additionalParameters": "-windowed 1 -home C:\\pico-8-carts",
+}
