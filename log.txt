@@ -12,7 +12,7 @@ codo_init
     07 fullscreen_method 1 // 0 maximized window (linux)  1 borderless desktop-sized window  2 fullscreen
     08 foreground_sleep_ms 2 // number of milliseconds to sleep each frame. Try 10 to conserve battery power
     09 background_sleep_ms 10 // number of milliseconds to sleep each frame when running in the background
-    10 sessions 272 // number of times program has been run
+    10 sessions 495 // number of times program has been run
     11 rmb_key 0 // 0 for none  226 for LALT
     12 desktop_path 
     13 sound_volume 256 // 0..256
@@ -87,7 +87,7 @@ SDL_OpenAudio ok
  channels:1
 Built-in audio drivers: 0 wasapi 1 directsound 2 winmm 3 disk 4 dummy
 Current audio driver: wasapi
-loading c:/pico-8-carts/carts/test.p8
+loading c:/pico-8-carts/carts/doom.p8
 set current path: 
 window closed (14)
 codo_exit
