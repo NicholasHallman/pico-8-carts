@@ -12,7 +12,7 @@ room = {
 player = {
     x = 64;
     y = 64;
-    dir = 0;
+    dir = 180;
     angle = function (self) 
         return (self.dir % 360)/360 
     end;
@@ -24,18 +24,18 @@ end
 
 function _update60()
     if(btn(up)) then 
-        player.y -= cos(player:angle())
-        player.x -= sin(player:angle())
-    end
-    if(btn(down)) then 
         player.y += cos(player:angle())
         player.x += sin(player:angle())
     end
+    if(btn(down)) then 
+        player.y -= cos(player:angle())
+        player.x -= sin(player:angle())
+    end
     if(btn(left)) then 
-        player.dir -= 1
+        player.dir += 1
     end
     if(btn(right)) then 
-        player.dir += 1
+        player.dir -= 1
     end
 end
 
@@ -59,24 +59,48 @@ function _draw()
         r.x2 = (cos(player:angle()) * w.x2) - (sin(player:angle()) * w.y2)  
         r.z2 = (sin(player:angle()) * w.x2) + (cos(player:angle()) * w.y2) 
 
-        p = {}
+        --printh('x1z1 (' .. r.x1 .. ', ' .. r.z1 .. ')' .. ' x2z2 (' .. r.x2 .. ', ' .. r.z2 .. ')')
+        if(r.z1 > 0.1 or r.z2 > 0.1 ) then
+            if(r.z1 < 0.1 and r.z2 > 0.1) then 
+                nr = intersect(r.x1, r.z1, r.x2, r.z2, 0.1, 0.1, 100, 100)
+                printh('('..nr.x..','..nr.z..')')
+                r.x1 = nr.x
+                r.z1 = nr.z
+            end
+            if(r.z1 > 0.1 and r.z2 < 0.1) then 
+                nr = intersect(r.x1, r.z1, r.x2, r.z2, -0.1, 0.1, -100, 100)
+                printh('('..nr.x..','..nr.z..')')
+                r.x2 = nr.x
+                r.z2 = nr.z
+            end
+            p = {}
 
-        p.x1 = 16 * r.x1 / r.z1 * -1
-        p.x2 = 16 * r.x2 / r.z2 * -1
+            p.x1 = 16 * r.x1 / r.z1 * -1
+            p.x2 = 16 * r.x2 / r.z2 * -1
 
-        p.t1 = (64 / r.z1 * -1)
-        p.t2 = (64 / r.z2 * -1)
+            p.t1 = (64 / r.z1 * -1)
+            p.t2 = (64 / r.z2 * -1)
 
-        p.b1 = ((-1 * 64) / r.z1 * -1)
-        p.b2 = ((-1 * 64) / r.z2 * -1)
+            p.b1 = ((-1 * 64) / r.z1 * -1)
+            p.b2 = ((-1 * 64) / r.z2 * -1)
 
 
-        line(p.x1 + 64, p.t1 + 64, p.x2 + 64, p.t2 + 64, white)
-        line(p.x1 + 64, p.b1 + 64, p.x2 + 64, p.b2 + 64, white)
+            line(p.x1 + 64, p.t1 + 64, p.x2 + 64, p.t2 + 64, white)
+            line(p.x1 + 64, p.b1 + 64, p.x2 + 64, p.b2 + 64, white)
 
-        line(p.x1 + 64, p.t1 + 64, p.x1 + 64, p.b1 + 64, white)
-        line(p.x2 + 64, p.t2 + 64, p.x2 + 64, p.b2 + 64, white)
+            line(p.x1 + 64, p.t1 + 64, p.x1 + 64, p.b1 + 64, white)
+            line(p.x2 + 64, p.t2 + 64, p.x2 + 64, p.b2 + 64, white)
+        end
     end
+end
+
+
+
+function intersect(x1,y1,x2,y2,x3,y3,x4,y4)
+    i = {}
+    i.x = ((((x1 * y2) - (y1 * x2)) * (x3 - x4)) - ((x1 - x2) * ((x3 * y4) - (y3 * x4)))) / (((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4)))
+    i.z = ((((x1 * y2) - (y1 * x2)) * (y3 - y4)) - ((y1 - y2) * ((x3 * y4) - (y3 * x4)))) / (((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4)))
+    return i
 end
 
 function clone(points)
