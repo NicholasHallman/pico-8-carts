@@ -12,13 +12,13 @@ codo_init
     07 fullscreen_method 1 // 0 maximized window (linux)  1 borderless desktop-sized window  2 fullscreen
     08 foreground_sleep_ms 2 // number of milliseconds to sleep each frame. Try 10 to conserve battery power
     09 background_sleep_ms 10 // number of milliseconds to sleep each frame when running in the background
-    10 sessions 509 // number of times program has been run
+    10 sessions 1571 // number of times program has been run
     11 rmb_key 0 // 0 for none  226 for LALT
     12 desktop_path 
     13 sound_volume 256 // 0..256
     14 music_volume 256 // 0..256
     15 mix_buffer_size 1024
-    16 version 0.1.12c
+    16 version 0.2.0i
     17 volume 256
     18 root_path c:/pico-8-carts/carts/
     19 cdata_path c:/pico-8-carts/cdata/
@@ -26,14 +26,18 @@ codo_init
     21 button_keys 0 0 0 0 0 0 0 0 0 0 0 0 0 
     22 live_notes 0
     23 cursor_snap 0
-    24 gif_len 8
-    25 gui_theme 0
-    26 screenshot_scale 3
-    27 gif_scale 2
-    28 shift_glyphs 1
+    24 gui_theme 0
+    25 screenshot_scale 3
+    26 gif_scale 2
+    27 gif_len 8
+    28 gif_reset_mode 0
     29 host_framerate_control 1
     30 splore_filter 0
     31 tab_width 1
+    32 draw_tabs 0
+    33 record_activity_log 1
+    34 allow_function_keys 1
+    35 check_for_cart_updates 1
   
   codo_system_init
   Compiled against SDL version: 2.0.2
@@ -48,37 +52,24 @@ codo_init
   codo_joystick_init
   Reading controller mappings: C:/pico-8-carts/sdl_controllers.txt
   searching for joysticks
-    found 4 joysticks
+    found 1 joysticks
     connecting joystick 0
     Unmapped Joystick 0: vJoy Device
     Number of Axes: 8
     Number of Buttons: 32
     Number of Balls: 0
-    connecting joystick 1
-    Unmapped Joystick 1: vJoy Device
-    Number of Axes: 8
-    Number of Buttons: 32
-    Number of Balls: 0
-    connecting joystick 2
-    Unmapped Joystick 2: vJoy Device
-    Number of Axes: 8
-    Number of Buttons: 32
-    Number of Balls: 0
-    connecting joystick 3
-    Unmapped Joystick 3: vJoy Device
-    Number of Axes: 8
-    Number of Buttons: 8
-    Number of Balls: 0
   ok
 ok
 codo_load_pod: C:/PICO8/pico8.dat ok 
 codo_set_screen 128 128 8 100
- window size: 640 480
-Current renderer:
-  Renderer direct3d:
-    Flags: 0x0000000E ( |  | )
-    Texture formats (3): ARGB8888, YV12, IYUV
-    Max Texture Size: 8192x8192
+ window size: 640 540
+  setting filter to nearest (screen_mode 0  back page width: 128)
+  renderer direct3d:
+   flags: 0x0000000E ( |  | )
+   texture formats (3): ARGB8888, YV12, IYUV
+   max texture size: 8192x8192
+ desktop size: 1714 1143
+ok
 codo_sound_init mix_buffer_size: 1024
 codo_sound_init
 SDL_INIT_AUDIO ok
@@ -87,6 +78,10 @@ SDL_OpenAudio ok
  channels:1
 Built-in audio drivers: 0 wasapi 1 directsound 2 winmm 3 disk 4 dummy
 Current audio driver: wasapi
+splore_init
+could not load favourites file: C:/pico-8-carts/favourites.txt
+loading c:/pico-8-carts/carts/world_gen.p8
+set current path: 
 window closed (14)
 codo_exit
   cmusic_stop
@@ -96,5 +91,5 @@ codo_exit
   codo_video_exit
   codo_joystick_exit
   codo_system_exit
-  codo_items_created: 1059
+  codo_items_created: 1077
 ok

@@ -2,7 +2,7 @@
     "editor.suggestSelection": "first",
     "pythonTestExplorer.testFramework": "unittest",
     "workbench.activityBar.visible": true,
-    "workbench.colorTheme": "Horizon Italic",
+    "workbench.colorTheme": "Gatito Theme",
     "editor.fontFamily": "Ligalex Mono",
     "editor.fontLigatures": true,
     "terminal.integrated.fontFamily": "Fira Mono for Powerline",

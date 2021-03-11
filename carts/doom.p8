@@ -6,12 +6,15 @@ left,right,up,down,fire1,fire2=0,1,2,3,4,5
 black,dark_blue,dark_purple,dark_green,brown,dark_gray,light_gray,white,red,orange,yellow,green,blue,indigo,pink,peach=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
 
 room = {
-    {x1 = 128/4; y1 = 128/4; x2 = 128/4 * 3; y2 = 128/4};
+    {x1 = 350; y1 = 350; x2 = 350; y2 = 450; c = blue};
+    {x1 = 450; y1 = 350; x2 = 350; y2 = 350; c = yellow};
+    {x1 = 350; y1 = 450; x2 = 450; y2 = 450; c = red};
+    {x1 = 450; y1 = 450; x2 = 450; y2 = 350; c = green};
 }
 
 player = {
-    x = 64;
-    y = 64;
+    x = 400;
+    y = 400;
     dir = 180;
     angle = function (self) 
         return (self.dir % 360)/360 
@@ -59,19 +62,26 @@ function _draw()
         r.x2 = (cos(player:angle()) * w.x2) - (sin(player:angle()) * w.y2)  
         r.z2 = (sin(player:angle()) * w.x2) + (cos(player:angle()) * w.y2) 
 
+        -- line(r.x1 + 64, r.z1 + 64, r.x2 + 64, r.z2 + 64, wall.c)
+        -- line(1 + 64, 1 + 64, 100 + 64, 100 + 64, wall.c)
+        -- line(-1 + 64, 1 + 64, -100 + 64, 100 + 64, wall.c)
         --printh('x1z1 (' .. r.x1 .. ', ' .. r.z1 .. ')' .. ' x2z2 (' .. r.x2 .. ', ' .. r.z2 .. ')')
         if(r.z1 > 0.1 or r.z2 > 0.1 ) then
             if(r.z1 < 0.1 and r.z2 > 0.1) then 
                 nr = intersect(r.x1, r.z1, r.x2, r.z2, 0.1, 0.1, 100, 100)
-                printh('('..nr.x..','..nr.z..')')
-                r.x1 = nr.x
-                r.z1 = nr.z
+                if(nr.x ~= nil and nr.z ~= nil) then
+                    r.x1 = nr.x
+                    r.z1 = nr.z
+                    -- circfill(r.x1 + 64, r.z1 + 64,3,blue)
+                end
             end
             if(r.z1 > 0.1 and r.z2 < 0.1) then 
                 nr = intersect(r.x1, r.z1, r.x2, r.z2, -0.1, 0.1, -100, 100)
-                printh('('..nr.x..','..nr.z..')')
-                r.x2 = nr.x
-                r.z2 = nr.z
+                if(nr.x ~= nil and nr.z ~= nil) then
+                    r.x2 = nr.x
+                    r.z2 = nr.z
+                    -- circfill(r.x2 + 64, r.z2 + 64,3,blue)
+                end
             end
             p = {}
 
@@ -85,22 +95,33 @@ function _draw()
             p.b2 = ((-1 * 64) / r.z2 * -1)
 
 
-            line(p.x1 + 64, p.t1 + 64, p.x2 + 64, p.t2 + 64, white)
-            line(p.x1 + 64, p.b1 + 64, p.x2 + 64, p.b2 + 64, white)
+            line(p.x1 + 64, p.t1 + 64, p.x2 + 64, p.t2 + 64, wall.c)
+            line(p.x1 + 64, p.b1 + 64, p.x2 + 64, p.b2 + 64, wall.c)
 
-            line(p.x1 + 64, p.t1 + 64, p.x1 + 64, p.b1 + 64, white)
-            line(p.x2 + 64, p.t2 + 64, p.x2 + 64, p.b2 + 64, white)
+            line(p.x1 + 64, p.t1 + 64, p.x1 + 64, p.b1 + 64, wall.c)
+            line(p.x2 + 64, p.t2 + 64, p.x2 + 64, p.b2 + 64, wall.c)
         end
     end
 end
 
-
+function cross_product(a, b, c, d)
+    return (a * d) - (c * b)
+end
 
 function intersect(x1,y1,x2,y2,x3,y3,x4,y4)
     i = {}
-    i.x = ((((x1 * y2) - (y1 * x2)) * (x3 - x4)) - ((x1 - x2) * ((x3 * y4) - (y3 * x4)))) / (((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4)))
-    i.z = ((((x1 * y2) - (y1 * x2)) * (y3 - y4)) - ((y1 - y2) * ((x3 * y4) - (y3 * x4)))) / (((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4)))
-    return i
+    t = cross_product(x1 - x3, x3 - x4, y1 - y3, y3 - y4)  / cross_product(x1 - x2, x3 - x4, y1 - y2, y3 - y4)
+    u = cross_product(x1 - x2, x1 - x3, y1 - y2, y1 - y3)  / cross_product(x1 - x2, x3 - x4, y1 - y2, y3 - y4)
+    if( u >= 0.1 and u <= 1) then
+        printh(t..', '..u)
+        return {x = x3 + (u * (x4 - x3)); z = y3 + (u * (y4 - y3));}
+    end
+    if( t >= 0.1 and t <= 1) then
+        printh(t..', '..u)
+        return {x = x1 + (t * (x2 - x1)); z = y1 + (t * (y2 - y1));}
+    end
+    printh('bad')
+    return { x = nil; z = nil;};
 end
 
 function clone(points)
